@@ -4,6 +4,7 @@ body {
   padding: 0;
   color: var(--black);
   background: #F5F6F8;
+  font-family: var(--font-family);
 }
 
 a {
@@ -19,7 +20,9 @@ a {
 :root {
   --black: #3B434E;
   --white: white;
+  --gray-light: #EBEBEB;
   --primary: #7653FC;
+  --primary-hover: #6344DF;
   --red: #FC836D;
   --green: #1DC37E;
   --green-light: #C8F8E4;
