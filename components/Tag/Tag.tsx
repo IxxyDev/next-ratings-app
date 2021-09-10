@@ -1,5 +1,5 @@
 import { TagProps } from "./Tag.props";
-import styles from "./P.module.css";
+import styles from "./Tag.module.css";
 import cn from 'classnames';
 
 export const Tag = ({ size = 'sm', children, color = 'ghost', href, className, ...props }: TagProps): JSX.Element => {
