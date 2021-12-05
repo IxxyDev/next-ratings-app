@@ -1,6 +1,4 @@
 import { LayoutProps } from "./Layout.props";
-import styles from "./Layout.module.css";
-import cn from 'classnames';
 import React, { FunctionComponent } from 'react';
 import { Header } from './Header/Header';
 import { Sidebar } from './Sidebar/Sidebar';
