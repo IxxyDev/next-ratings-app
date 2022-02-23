@@ -6,7 +6,7 @@ import { useEffect, useState, KeyboardEvent } from 'react';
 
 export const Rating = ({ isEditable = false, rating, setRating, ...props }: RatingProps): JSX.Element => {
   const [ratingArray, setRatingArray] = useState<JSX.Element[]>(new Array(5).fill(<></>));
-
+  
   useEffect(() => {
     constructRating(rating);
   }, [rating]);
@@ -46,7 +46,7 @@ export const Rating = ({ isEditable = false, rating, setRating, ...props }: Rati
   };
 
   const handleSpaceClick = (i: number, e: KeyboardEvent<SVGAElement>) => {
-    if (e.code != 'Space' || !setRating) return;
+    if (e.code !== 'Space' || !setRating) return;
     setRating(i);
   };
   
