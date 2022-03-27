@@ -4,7 +4,6 @@ import { withLayout } from '../../layout/Layout';
 import axios from 'axios';
 import { TopLevelCategory, TopPageModel } from '../../interfaces/page.interface';
 import { MenuItem } from '../../interfaces/menu.interface';
-import { ParsedUrlQuery } from 'querystring';
 import { ProductModel } from '../../interfaces/product.interface';
 import { firstLevelMenu } from '../../helpers/helpers';
 import { TopPageComponent } from '../../page-components';
@@ -36,7 +35,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   };
 };
 
-export const getStaticProps: GetStaticProps = async ({ params }: GetStaticPropsContext<ParsedUrlQuery>) => {
+export const getStaticProps: GetStaticProps<TopPageProps> = async ({ params }: GetStaticPropsContext) => {
   if (!params) {
     return {
       notFound: true
