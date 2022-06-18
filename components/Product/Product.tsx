@@ -1,6 +1,6 @@
 import { ProductProps } from './Product.props';
 import styles from './Product.module.css';
-import { FC, useState } from 'react';
+import React, { FC, useState } from 'react';
 import { Card } from '../Card/Card';
 import { Rating } from '../Rating/Rating';
 import { Tag } from '../Tag/Tag';
@@ -10,6 +10,7 @@ import { Divider } from '../Divider/Divider';
 import Image from 'next/image';
 import cn from 'classnames';
 import { Review } from '../Review/Review';
+import {ReviewForm} from "../ReviewForm/ReviewForm";
 
 export const Product: FC<ProductProps> = ({ product, className, ...props }) => {
   const [isReviewOpened, setIsReviewOpened] = useState<boolean>(false);
@@ -95,9 +96,13 @@ export const Product: FC<ProductProps> = ({ product, className, ...props }) => {
           [styles.closed]: !isReviewOpened,
         })}
       >
-        {product.reviews.map(review => (
-          <Review key={review._id} review={review} />
+        {product.reviews.map((review) => (
+          <>
+            <Review key={review._id} review={review} />
+            <Divider />
+          </>
         ))}
+        <ReviewForm productId={product._id} />
       </Card>
     </>
   );
