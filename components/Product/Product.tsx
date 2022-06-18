@@ -12,7 +12,7 @@ import cn from 'classnames';
 import { Review } from '../Review/Review';
 import {ReviewForm} from "../ReviewForm/ReviewForm";
 
-export const Product: FC<ProductProps> = ({ product, className, ...props }) => {
+export const Product: FC<ProductProps> = ({ product }) => {
   const [isReviewOpened, setIsReviewOpened] = useState<boolean>(false);
 
   return (
@@ -97,10 +97,10 @@ export const Product: FC<ProductProps> = ({ product, className, ...props }) => {
         })}
       >
         {product.reviews.map((review) => (
-          <>
-            <Review key={review._id} review={review} />
+          <div key={review._id}>
+            <Review review={review} />
             <Divider />
-          </>
+          </div>
         ))}
         <ReviewForm productId={product._id} />
       </Card>
