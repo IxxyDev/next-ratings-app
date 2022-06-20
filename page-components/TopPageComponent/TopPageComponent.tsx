@@ -5,7 +5,7 @@ import { TopLevelCategory } from '../../interfaces/page.interface';
 import { SortEnum } from '../../components/Sort/Sort.props';
 
 import { sortReducer } from './sort.reducer';
-import { useReducer } from 'react';
+import {useEffect, useReducer} from 'react';
 
 export const TopPageComponent = ({
   page,
@@ -20,6 +20,10 @@ export const TopPageComponent = ({
   const setSort = (sort: SortEnum) => {
     dispatchSort({ type: sort });
   };
+
+  useEffect(() => {
+    dispatchSort({ type: 'reset', initialState: products });
+  }, [products]);
 
   return (
     <div className='wrapper'>
