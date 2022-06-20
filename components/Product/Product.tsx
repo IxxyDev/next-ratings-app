@@ -1,6 +1,6 @@
 import { ProductProps } from './Product.props';
 import styles from './Product.module.css';
-import React, { FC, useState } from 'react';
+import React, {FC, useRef, useState} from 'react';
 import { Card } from '../Card/Card';
 import { Rating } from '../Rating/Rating';
 import { Tag } from '../Tag/Tag';
@@ -14,6 +14,15 @@ import {ReviewForm} from "../ReviewForm/ReviewForm";
 
 export const Product: FC<ProductProps> = ({ product }) => {
   const [isReviewOpened, setIsReviewOpened] = useState<boolean>(false);
+  const reviewRef = useRef<HTMLDivElement>(null);
+
+  const scrollToReview = () => {
+    setIsReviewOpened(true);
+    reviewRef.current?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start'
+    });
+  };
 
   return (
     <>
@@ -49,8 +58,10 @@ export const Product: FC<ProductProps> = ({ product }) => {
         <div className={styles.priceTitle}>цена</div>
         <div className={styles.creditTitle}>кредит</div>
         <div className={styles.rateTitle}>
-          {product.reviewCount}{' '}
-          {declOfNum(product.reviewCount, ['отзыв', 'отзыва', 'отзывов'])}
+          <a href="#" onClick={scrollToReview}>
+            {product.reviewCount}{' '}
+            {declOfNum(product.reviewCount, ['отзыв', 'отзыва', 'отзывов'])}
+          </a>
         </div>
         <Divider className={cn(styles.hr, styles.hr2)} />
         <div className={styles.feature}>
@@ -95,6 +106,7 @@ export const Product: FC<ProductProps> = ({ product }) => {
           [styles.opened]: isReviewOpened,
           [styles.closed]: !isReviewOpened,
         })}
+        ref={reviewRef}
       >
         {product.reviews.map((review) => (
           <div key={review._id}>
