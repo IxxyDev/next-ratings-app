@@ -28,18 +28,24 @@
   gap: 20px;
 }
 
-.success {
+.panel {
   position: relative;
 
   padding: 20px;
 
   border-radius: 5px;
+}
 
+.success {
   background-color: var(--green-light);
 }
 
 .successTitle {
   font-weight: bold;
+}
+
+.error {
+  background-color: var(--red-light);
 }
 
 .close {
@@ -48,6 +54,10 @@
   right: 20px;
 
   cursor: pointer;
+}
+
+.error .close path {
+  stroke: var(--red);
 }
 
 @media screen and (max-width: 1100px) {

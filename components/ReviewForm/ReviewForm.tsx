@@ -1,20 +1,38 @@
 import {ReviewFormProps} from "./ReviewForm.props";
 import cn from "classnames";
 import styles from './ReviewForm.module.css';
-import React, {FC} from "react";
+import React, {FC, useState} from "react";
 import {Input} from "../Input/Input";
 import {Rating} from "../Rating/Rating";
 import {Textarea} from "../Textarea/Textarea";
 import {Button} from "../Button/Button";
 import CloseIcon from './close.svg';
 import {useForm, Controller} from "react-hook-form";
-import {IReviewForm} from "./ReviewForm.interface";
+import {IReviewForm, IReviewSentResponse} from "./ReviewForm.interface";
+import axios from "axios";
+import {API} from "../../helpers/api";
 
 export const ReviewForm: FC<ReviewFormProps> = ({productId, className, ...props}) => {
-  const {register, control, handleSubmit, formState: { errors }} = useForm<IReviewForm>();
+  const {register, control, handleSubmit, formState: { errors }, reset} = useForm<IReviewForm>();
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [error, setError] = useState('');
 
-  const onSubmit = (data: IReviewForm) => {
+  const onSubmit = async (formData: IReviewForm) => {
+    try {
+      const { data } = await axios.post<IReviewSentResponse>(API.review.createDemo, {...formData, productId});
 
+      if (data.message) {
+        setIsSuccess(true);
+        reset();
+      } else {
+        setError('Что-то пошло не так');
+      }
+    } catch (e) {
+      let message;
+      if (e instanceof Error) message = e.message;
+
+      setError(message);
+    }
   };
 
   return (
@@ -52,11 +70,19 @@ export const ReviewForm: FC<ReviewFormProps> = ({productId, className, ...props}
           <Button type='submit' appearance='primary'>Отправить</Button>
           <span className={styles.info}>* Перед публикацией отзыв пройдет предварительную модерацию и проверку</span>
         </div>
-        <div className={styles.success}>
-          <p className={styles.successTitle}>Ваш отзыв отправлен</p>
-          <p>Спасибо, ваш отзыв будет опубликован после проверки</p>
-          <CloseIcon className={styles.close}/>
+        {isSuccess &&
+          <div className={cn(styles.success, styles.panel)}>
+            <p className={styles.successTitle}>Ваш отзыв отправлен</p>
+            <p>Спасибо, ваш отзыв будет опубликован после проверки</p>
+            <CloseIcon className={styles.close} onClick={() => setIsSuccess(false)}/>
         </div>
+        }
+        {error !== '' &&
+          <div className={cn(styles.error, styles.panel)}>
+            Что-то пошло не так, попробуйте обновить страницу
+            <CloseIcon className={styles.close} onClick={() => setError('')}/>
+          </div>
+        }
       </div>
     </form>
   );
