@@ -38,3 +38,12 @@ a {
   --green-light: #C8F8E4;
   --font-family: 'Noto Sans KR', sans-serif;
 }
+
+.visuallyHidden {
+  position: absolute;
+
+  overflow: hidden;
+
+  width: 0;
+  height: 0;
+}
