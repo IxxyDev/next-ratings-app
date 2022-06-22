@@ -25,7 +25,7 @@ const Layout = ({ children }: LayoutProps): JSX.Element => {
       <a
         onFocus={() => setIsSkipLinkShown(true)}
         onKeyDown={skipContentAction}
-        tabIndex={1} className={cn(styles.skipLink, {
+        tabIndex={0} className={cn(styles.skipLink, {
         [styles.shown]: isSkipLinkShown
       })}>К содержанию</a>
       <Header className={styles.header} />
