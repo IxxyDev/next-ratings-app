@@ -32,6 +32,7 @@ export const Product = motion(forwardRef(({
       behavior: 'smooth',
       block: 'start'
     });
+    reviewRef.current?.focus();
   };
 
   return (
@@ -115,6 +116,7 @@ export const Product = motion(forwardRef(({
           color='blue'
           className={cn(styles.reviews)}
           ref={reviewRef}
+          tabIndex={isReviewOpened ? 0 : -1}
         >
           {product.reviews.map((review) => (
             <div key={review._id}>
@@ -122,7 +124,7 @@ export const Product = motion(forwardRef(({
               <Divider/>
             </div>
           ))}
-          <ReviewForm productId={product._id}/>
+          <ReviewForm productId={product._id} isOpened={isReviewOpened}/>
         </Card>
       </motion.div>
     </div>
