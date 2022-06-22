@@ -1,18 +1,36 @@
 import { LayoutProps } from "./Layout.props";
-import React, { FunctionComponent } from 'react';
+import React, {FunctionComponent, useState, KeyboardEvent, useRef} from 'react';
 import { Header } from './Header/Header';
 import { Sidebar } from './Sidebar/Sidebar';
 import { Footer } from './Footer/Footer';
 import styles from './Layout.module.css';
 import { AppContextProvider, IAppContext } from '../context/app.context';
 import {Up} from "../components";
+import cn from "classnames";
 
 const Layout = ({ children }: LayoutProps): JSX.Element => {
+  const [isSkipLinkShown, setIsSkipLinkShown] = useState(false);
+  const bodyRef = useRef<HTMLDivElement>(null);
+
+  const skipContentAction = (key: KeyboardEvent) => {
+    if (key.code === 'Enter' || key.code === 'Space') {
+      key.preventDefault();
+      bodyRef.current?.focus();
+    }
+    setIsSkipLinkShown(false);
+  };
+
   return (
     <div className={styles.wrapper}>
+      <a
+        onFocus={() => setIsSkipLinkShown(true)}
+        onKeyDown={skipContentAction}
+        tabIndex={1} className={cn(styles.skipLink, {
+        [styles.shown]: isSkipLinkShown
+      })}>К содержанию</a>
       <Header className={styles.header} />
       <Sidebar className={styles.sidebar} />
-      <div className={styles.body}>{children}</div>
+      <div className={styles.body} ref={bodyRef} tabIndex={0}>{children}</div>
       <Footer className={styles.footer} />
       <Up />
     </div>
