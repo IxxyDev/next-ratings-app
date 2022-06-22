@@ -1,7 +1,7 @@
 import {SearchProps} from "./Search.props";
 import styles from "./Search.module.css";
 import cn from 'classnames';
-import {FC, useState} from "react";
+import {FC, useState, KeyboardEvent} from "react";
 import {Input} from "../Input/Input";
 import {Button} from "../Button/Button";
 import SearchIcon from './search.svg';
@@ -34,7 +34,7 @@ export const Search: FC<SearchProps> = ({className, ...props}) => {
              onChange={e => setSearch(e.target.value)}
              onKeyDown={handleKeyDown}
       />
-      <Button appearance='primary' className={styles.button} onClick={goToSearch}>
+      <Button appearance='primary' className={styles.button} onClick={goToSearch} aria-label='Искать по сайту'>
         <SearchIcon/>
       </Button>
     </div>
