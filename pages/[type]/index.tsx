@@ -5,11 +5,10 @@ import { firstLevelMenu } from '../../helpers/helpers';
 import axios from 'axios';
 import { MenuItem } from '../../interfaces/menu.interface';
 import { GetStaticPropsContext, GetStaticProps } from 'next';
-import { ParsedUrlQuery } from 'querystring';
 import {API} from "../../helpers/api";
 
 function Type({ firstCategory }: TypeProps): JSX.Element {
-  return <>Type</>;
+  return <>Type: {firstCategory}</>;
 }
 
 export default withLayout(Type);
@@ -23,7 +22,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps<TypeProps> = async ({
   params,
-}: GetStaticPropsContext<ParsedUrlQuery>) => {
+}: GetStaticPropsContext) => {
   if (!params) {
     return {
       notFound: true,
