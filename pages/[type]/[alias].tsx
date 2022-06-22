@@ -13,20 +13,21 @@ import Head from 'next/head';
 function TopPage({firstCategory, page, products}: TopPageProps): JSX.Element {
   return (
     <>
-      <Head>
-        <title>{page.metaTitle}</title>
-        <meta name='description' content={page.metaDescription} />
-        <meta property='og:title' content={page.metaTitle} />
-        <meta property='og:description' content={page.metaDescription} />
-        <meta property='og:type' content='article' />
-      </Head>
-      <TopPageComponent
-        firstCategory={firstCategory}
-        page={page}
-        products={products}
-      />
+      {page && products && <>
+        <Head>
+          <title>{page.metaTitle}</title>
+          <meta name='description' content={page.metaDescription}/>
+          <meta property='og:title' content={page.metaTitle}/>
+          <meta property='og:description' content={page.metaDescription}/>
+          <meta property='og:type' content='article'/>
+        </Head>
+        <TopPageComponent
+          firstCategory={firstCategory}
+          page={page}
+          products={products}
+        />
+      </>}
     </>
-
   );
 }
 
@@ -45,7 +46,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   }
   return {
     paths,
-    fallback: true
+    fallback: false
   };
 };
 
@@ -97,7 +98,9 @@ export const getStaticProps: GetStaticProps<TopPageProps> = async ({params}: Get
   }
 };
 
-interface TopPageProps extends Record<string, unknown> {
+interface TopPageProps extends Record
+  <string
+    , unknown> {
   menu: MenuItem[];
   firstCategory: TopLevelCategory;
   page: TopPageModel;
