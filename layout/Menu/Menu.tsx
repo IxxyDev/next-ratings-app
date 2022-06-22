@@ -91,7 +91,7 @@ export const Menu = (): JSX.Element => {
                   animate={m.isOpened ? 'visible' : 'hidden'}
                   className={cn(styles.secondLevelBlock)}
                 >
-                  {buildThirdLevel(m.pages, menuItem.route)}
+                  {buildThirdLevel(m.pages, menuItem.route, m.isOpened ?? false)}
                 </motion.div>
               </div>
             </div>
@@ -119,10 +119,10 @@ export const Menu = (): JSX.Element => {
   };
 
   return (
-    <div className={styles.menu}>
+    <nav className={styles.menu} role='navigation'>
       <ul>
         {buildFirstLevel()}
       </ul>
-    </div>
+    </nav>
   );
 };
