@@ -64,13 +64,13 @@
   fill: var(--red);
 }
 
-@media screen and (max-width: 1200px) {
+@media screen and (width <= 1200px) {
   .hh {
     grid-template-columns: 1fr;
   }
 }
 
-@media screen and (max-width: 640px) {
+@media screen and (width <= 640px) {
   .salary {
     grid-template-columns: 1fr;
   }
