@@ -39,17 +39,18 @@ export default withLayout(TopPage);
 export const getStaticPaths: GetStaticPaths = async () => {
   let paths: string[] = [];
   for (const m of firstLevelMenu) {
-    const {data: menu} = await axios.post<MenuItem[]>(
-      API.topPage.find,
-      {
+    try {
+      const { data: menu } = await axios.post<MenuItem[]>(API.topPage.find, {
         firstCategory: m.id,
-      }
-    );
-    paths = paths.concat(menu.flatMap(s => s.pages.map(p => `/${m.route}/${p.alias}`)));
+      });
+      paths = paths.concat(menu.flatMap(s => s.pages.map(p => `/${m.route}/${p.alias}`)));
+    } catch {
+      // skip this category if API is unreachable at build time
+    }
   }
   return {
     paths,
-    fallback: false
+    fallback: 'blocking',
   };
 };
 
@@ -93,10 +94,12 @@ export const getStaticProps: GetStaticProps<TopPageProps> = async ({params}: Get
         page,
         products,
       },
+      revalidate: 60,
     };
   } catch {
     return {
-      notFound: true
+      notFound: true,
+      revalidate: 60,
     };
   }
 };

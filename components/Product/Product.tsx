@@ -11,8 +11,9 @@ import cn from 'classnames';
 import {Review} from '../Review/Review';
 import {ReviewForm} from "../ReviewForm/ReviewForm";
 import {motion} from "framer-motion";
+import Image from 'next/image';
 
-export const Product = motion(forwardRef(({
+const ProductBase = forwardRef(({
                                             product,
                                             className,
                                             ...props
@@ -38,11 +39,12 @@ export const Product = motion(forwardRef(({
     <div className={className} {...props} ref={ref}>
       <Card className={styles.product}>
         <div className={styles.logo}>
-          <img
+          <Image
             src={product.image}
             alt={product.title}
             width={70}
             height={70}
+            unoptimized
           />
         </div>
         <div className={styles.title}>{product.title}</div>
@@ -137,4 +139,6 @@ export const Product = motion(forwardRef(({
       </motion.div>
     </div>
   );
-}));
+});
+ProductBase.displayName = 'Product';
+export const Product = motion.create(ProductBase);

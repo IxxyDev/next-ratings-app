@@ -51,18 +51,12 @@ export const Menu = (): JSX.Element => {
     return (
       <ul className={styles.firstLevelList}>
         {firstLevelMenu.map(m => (
-          <li key={m.route} aria-expanded={m.id === firstCategory}>
-            <Link href={`/${m.route}`}>
-              <a>
-                <div
-                  className={cn(styles.firstLevel, {
-                    [styles.firstLevelActive]: m.id === firstCategory,
-                  })}
-                >
-                  {m.icon}
-                  <span>{m.name}</span>
-                </div>
-              </a>
+          <li key={m.route}>
+            <Link href={`/${m.route}`} className={cn(styles.firstLevel, {
+              [styles.firstLevelActive]: m.id === firstCategory,
+            })}>
+              {m.icon}
+              <span>{m.name}</span>
             </Link>
             {m.id === firstCategory && buildSecondLevel(m)}
           </li>
@@ -106,16 +100,15 @@ export const Menu = (): JSX.Element => {
   const buildThirdLevel = (pages: PageItem[], route: string, isOpened: boolean) => {
     return pages.map(page => (
       <motion.li key={page._id} variants={variantsChildren} >
-        <Link href={`/${route}/${page.alias}`}>
-          <a
-            tabIndex={isOpened ? 0 : -1}
-            aria-current={router.asPath === `/${route}/${page.alias}` ? 'page' : false}
-            className={cn(styles.thirdLevel, {
-              [styles.thirdLevelActive]: router.asPath === `/${route}/${page.alias}`,
-            })}
-          >
-            {page.category}
-          </a>
+        <Link
+          href={`/${route}/${page.alias}`}
+          tabIndex={isOpened ? 0 : -1}
+          aria-current={router.asPath === `/${route}/${page.alias}` ? 'page' : false}
+          className={cn(styles.thirdLevel, {
+            [styles.thirdLevelActive]: router.asPath === `/${route}/${page.alias}`,
+          })}
+        >
+          {page.category}
         </Link>
       </motion.li>
     ));
