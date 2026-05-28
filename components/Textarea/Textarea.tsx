@@ -13,3 +13,4 @@ export const Textarea = forwardRef(({ className, error, ...props}: TextareaProps
     </div>
   );
 });
+Textarea.displayName = 'Textarea';

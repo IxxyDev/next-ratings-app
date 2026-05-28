@@ -8,10 +8,10 @@ export const Footer = ({className, ...props }: FooterProps): JSX.Element => {
   return (
     <footer className={cn(className, styles.footer)} {...props}>
       <div>OwlTop 2021 - {format(new Date(), 'yyyy')}</div>
-      <a href='#' target='_blank'>
+      <a href='#' target='_blank' rel='noopener noreferrer'>
         Пользовательское соглашение
       </a>
-      <a href='#' target='_blank'>
+      <a href='#' target='_blank' rel='noopener noreferrer'>
         Политика конфиденциальности
       </a>
     </footer>

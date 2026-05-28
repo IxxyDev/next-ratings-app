@@ -10,7 +10,7 @@ export const Sort: FC<SortProps> = ({sort, setSort, className, ...props}) => {
       <div className={styles.sortName} id='sort'>Сортировка</div>
       <button
         id='rating'
-        aria-selected={sort === SortEnum.Rating}
+        aria-pressed={sort === SortEnum.Rating}
         aria-labelledby='sort rating'
         onClick={() => setSort(SortEnum.Rating)}
         className={cn({
@@ -21,7 +21,7 @@ export const Sort: FC<SortProps> = ({sort, setSort, className, ...props}) => {
       </button>
       <button
         id='price'
-        aria-selected={sort === SortEnum.Price}
+        aria-pressed={sort === SortEnum.Price}
         aria-labelledby='sort price'
         onClick={() => setSort(SortEnum.Price)}
         className={cn({

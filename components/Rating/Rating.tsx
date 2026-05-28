@@ -10,6 +10,7 @@ export const Rating = forwardRef(({ isEditable = false, rating, setRating, error
 
   useEffect(() => {
     constructRating(rating);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [rating, tabIndex]);
 
   const computeFocus = (rating: number, idx: number): number => {
@@ -29,6 +30,7 @@ export const Rating = forwardRef(({ isEditable = false, rating, setRating, error
     const updatedArray = ratingArray.map((r: JSX.Element, i: number) => {
       return (
         <span
+          key={i}
           className={cn(styles.star, {
             [styles.filled]: i < currentRating,
             [styles.editable]: isEditable,
@@ -38,7 +40,7 @@ export const Rating = forwardRef(({ isEditable = false, rating, setRating, error
           onClick={() => onClick(i + 1)}
           tabIndex={computeFocus(rating, i)}
           onKeyDown={handleKeyClick}
-          ref={ref => ratingArrayRef.current?.push(ref)}
+          ref={ref => { ratingArrayRef.current?.push(ref); }}
           role={isEditable ? 'slider' : ''}
           aria-valuenow={rating}
           aria-valuemax={5}
@@ -93,3 +95,4 @@ export const Rating = forwardRef(({ isEditable = false, rating, setRating, error
     </div>
   );
 });
+Rating.displayName = 'Rating';

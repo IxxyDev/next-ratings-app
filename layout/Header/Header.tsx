@@ -13,7 +13,13 @@ export const Header = ({className, ...props}: HeaderProps): JSX.Element => {
   const router = useRouter();
   const shouldReduceMotion = useReducedMotion();
 
-  useEffect(() => setIsOpened(false), [router]);
+  useEffect(() => {
+    const handleRouteChange = () => setIsOpened(false);
+    router.events.on('routeChangeStart', handleRouteChange);
+    return () => {
+      router.events.off('routeChangeStart', handleRouteChange);
+    };
+  }, [router.events]);
 
   const variants = {
     opened: {
@@ -32,7 +38,7 @@ export const Header = ({className, ...props}: HeaderProps): JSX.Element => {
   return (
     <header className={cn(className, styles.header)} {...props}>
       <Logo/>
-      <ButtonIcon icon='menu' appearance='white' onClick={() => setIsOpened(true)}/>
+      <ButtonIcon icon='menu' appearance='white' onClick={() => setIsOpened(true)} aria-label='Открыть меню'/>
       <motion.div
         className={styles.mobileMenu}
         variants={variants}
@@ -40,7 +46,7 @@ export const Header = ({className, ...props}: HeaderProps): JSX.Element => {
         animate={isOpened ? 'opened' : 'closed'}
       >
         <Sidebar/>
-        <ButtonIcon className={styles.menuClose} icon='close' appearance='white' onClick={() => setIsOpened(false)}/>
+        <ButtonIcon className={styles.menuClose} icon='close' appearance='white' onClick={() => setIsOpened(false)} aria-label='Закрыть меню'/>
       </motion.div>
     </header>
   );
