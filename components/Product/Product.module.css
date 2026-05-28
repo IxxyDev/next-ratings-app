@@ -1,7 +1,6 @@
 .product {
   display: grid;
   grid-template-columns: [start] 70px [logoend] 30px [titlestart] calc(50% - 100px) [middle] 1fr [pricestart] auto [priceend] 40px [creditstart] auto [creditend] 40px [ratestart] auto [end];
-
   margin-top: 30px;
   padding: 30px;
 }
@@ -19,7 +18,6 @@
 .price,
 .priceTitle {
   grid-column: pricestart / priceend;
-
   white-space: nowrap;
 }
 
@@ -31,7 +29,6 @@
 .rating,
 .rateTitle {
   grid-column: ratestart / end;
-
   white-space: nowrap;
 }
 
@@ -47,7 +44,6 @@
 
 .advBlock {
   grid-column: middle / end;
-
   font-size: 16px;
   line-height: 22px;
 }
@@ -58,9 +54,7 @@
 
 .title {
   align-self: flex-end;
-
   margin-bottom: 5px;
-
   font-size: 20px;
   font-weight: 600;
   line-height: 27px;
@@ -69,7 +63,6 @@
 .price,
 .credit {
   align-self: flex-end;
-
   font-size: 20px;
   line-height: 27px;
 }
@@ -93,7 +86,6 @@
 
 .description {
   margin-bottom: 15px;
-
   font-size: 16px;
   line-height: 24px;
 }
@@ -119,13 +111,11 @@
 .advantages {
   margin-bottom: 20px;
   padding-left: 15px;
-
   border-left: 2px solid #1DC37E;
 }
 
 .disadvantages {
   padding-left: 15px;
-
   border-left: 2px solid var(--red);
 }
 
@@ -133,11 +123,8 @@
   display: grid;
   grid-template-columns: auto 1fr auto;
   gap: 10px;
-
   align-items: baseline;
-
   padding-right: 60px;
-
   font-size: 16px;
   line-height: 32px;
 }
@@ -148,13 +135,11 @@
 
 .dots {
   margin-bottom: 5px;
-
   border-bottom: 1px dashed var(--gray-light);
 }
 
 .reviews {
   overflow: hidden;
-
   padding: 30px;
 }
 
@@ -180,7 +165,6 @@
 
   .logo {
     grid-area: logo;
-
     margin-bottom: 20px;
   }
 
@@ -190,7 +174,6 @@
 
   .tags {
     grid-area: tags;
-
     margin-bottom: 20px;
   }
 
