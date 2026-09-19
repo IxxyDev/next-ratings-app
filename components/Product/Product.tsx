@@ -12,7 +12,7 @@ import { Divider } from '../Divider/Divider';
 import cn from 'classnames';
 import { Review } from '../Review/Review';
 import { ReviewForm } from '../ReviewForm/ReviewForm';
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import Image from 'next/image';
 
 const ProductBase = ({ product, className, ref, ...props }: ProductProps) => {

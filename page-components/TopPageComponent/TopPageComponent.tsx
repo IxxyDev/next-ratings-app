@@ -1,18 +1,19 @@
+'use client';
+
 import { TopPageComponentProps } from './TopPageComponent.props';
 import { Advantages, HhData, Htag, Product, Sort, Tag } from '../../components';
 import styles from './TopPageComponent.module.css';
 import { TopLevelCategory } from '../../interfaces/page.interface';
 import { SortEnum } from '../../components/Sort/Sort.props';
-
 import { sortReducer } from './sort.reducer';
-import {useEffect, useReducer} from 'react';
-import {useReducedMotion} from "framer-motion";
+import { useReducer } from 'react';
+import { useReducedMotion } from 'motion/react';
 
 export const TopPageComponent = ({
   page,
   products,
   firstCategory,
-}: TopPageComponentProps): JSX.Element => {
+}: TopPageComponentProps) => {
   const [{ products: sortedProducts, sort }, dispatchSort] = useReducer(
     sortReducer,
     { products, sort: SortEnum.Rating }
@@ -23,16 +24,12 @@ export const TopPageComponent = ({
     dispatchSort({ type: sort });
   };
 
-  useEffect(() => {
-    dispatchSort({ type: 'reset', initialState: products });
-  }, [products]);
-
   return (
     <div className='wrapper'>
       <div className={styles.title}>
         <Htag tag='h1'>{page.title}</Htag>
         {products && (
-          <Tag color='gray' size='m' aria-label={products.length + 'элементов'}>
+          <Tag color='gray' size='m' aria-label={products.length + ' элементов'}>
             {products.length}
           </Tag>
         )}

@@ -2,7 +2,7 @@
 
 import styles from './Up.module.css';
 import { useScrollY } from '../../hooks/useScrollY';
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import { ButtonIcon } from '../ButtonIcon/ButtonIcon';
 
 export const Up = () => {

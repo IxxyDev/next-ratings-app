@@ -1,0 +1,17 @@
+.results {
+  margin-top: 16px;
+  list-style: none;
+}
+
+.result {
+  padding: 12px 0;
+  border-bottom: 1px solid var(--gray-light);
+}
+
+.resultLink {
+  font-weight: 600;
+}
+
+.resultCategory {
+  margin-top: 4px;
+}

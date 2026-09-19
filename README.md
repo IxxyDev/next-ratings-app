@@ -1,12 +1,13 @@
 # MyTop — ratings for courses, services, books and products
 
-A ratings-and-reviews storefront built with Next.js (Pages Router). Pages are
-generated statically (SSG + ISR, `revalidate: 60`) from an external API.
+A ratings-and-reviews storefront built with Next.js App Router. Data comes from
+an external API through `'use cache'` functions (Cache Components, `cacheLife('minutes')`),
+so pages are prerendered and revalidated in the background.
 
 ## Stack
 
-- Next.js 16 (canary, Turbopack), React 19, TypeScript 7 (native `tsc`)
-- framer-motion, react-hook-form, axios, date-fns, CSS Modules
+- Next.js 16 (canary, Turbopack, Cache Components, React Compiler), React 19, TypeScript 7 (native `tsc`)
+- motion, react-hook-form, date-fns, CSS Modules
 - ESLint 10 (flat config), Stylelint 17, Husky
 
 ## Getting started
@@ -48,11 +49,16 @@ with `--legacy-peer-deps`.
 
 ## Layout
 
-- `pages/` — routes: `/`, `/[type]`, `/[type]/[alias]`, `/search`, `/agreement`, `/privacy`
+- `app/` — routes: `/`, `/[type]`, `/[type]/[alias]`, `/search`, `/agreement`, `/privacy`,
+  plus `not-found.tsx` and `error.tsx`; `(main)` and `[type]` layouts load the menu and wrap the shell
 - `page-components/` — large page-level blocks
 - `components/` — UI components (each: `.tsx`, `.props.ts`, `.module.css`)
-- `layout/` — header, sidebar, menu, footer, `withLayout` HOC
-- `interfaces/`, `helpers/`, `hooks/`, `context/`
+- `layout/` — client shell: header, sidebar, menu, footer
+- `helpers/data.ts` — cached server data access; `helpers/api.ts` — endpoint URLs
+- `interfaces/`, `hooks/`, `context/`
+
+Unknown `/[type]/[alias]` pages are streamed with Partial Prerendering, so a
+missing alias renders the not-found UI with `noindex` but an HTTP 200 shell.
 
 ## Docker
 

@@ -1,5 +1,10 @@
 import { ReactNode } from 'react';
+import { MenuItem } from '../interfaces/menu.interface';
+import { TopLevelCategory } from '../interfaces/page.interface';
 
 export interface LayoutProps {
-  children: ReactNode
+  menu: MenuItem[];
+  firstCategory: TopLevelCategory;
+  year: number;
+  children: ReactNode;
 }

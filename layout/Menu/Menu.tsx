@@ -1,17 +1,19 @@
-import {AppContext} from '../../context/app.context';
+'use client';
+
+import { AppContext } from '../../context/app.context';
 import styles from './Menu.module.css';
 import cn from 'classnames';
-import React, {useContext, KeyboardEvent, useState} from 'react';
-import {FirstLevelMenuItem, MenuItem, PageItem} from '../../interfaces/menu.interface';
+import { use, KeyboardEvent, useState } from 'react';
+import { FirstLevelMenuItem, MenuItem, PageItem } from '../../interfaces/menu.interface';
 import Link from 'next/link';
-import {useRouter} from 'next/router';
-import {firstLevelMenu} from '../../helpers/helpers';
-import {motion, useReducedMotion} from "framer-motion";
+import { usePathname } from 'next/navigation';
+import { firstLevelMenu } from '../../helpers/helpers';
+import { motion, useReducedMotion } from 'motion/react';
 
-export const Menu = (): JSX.Element => {
+export const Menu = () => {
   const [announce, setAnnounce] = useState<'closed' | 'opened' | undefined>();
-  const {menu, firstCategory, setMenu} = useContext(AppContext);
-  const router = useRouter();
+  const { menu, firstCategory, setMenu } = use(AppContext);
+  const pathname = usePathname();
   const shouldReduceMotion = useReducedMotion();
 
   const variants = {
@@ -22,15 +24,15 @@ export const Menu = (): JSX.Element => {
         staggerChildren: 0.1
       }
     },
-    hidden: {marginBottom: 0},
+    hidden: { marginBottom: 0 },
   };
 
   const variantsChildren = {
-    visible: {opacity: 1, height: 38},
-    hidden: {opacity: shouldReduceMotion ? 1 : 0, height: 0},
+    visible: { opacity: 1, height: 38 },
+    hidden: { opacity: shouldReduceMotion ? 1 : 0, height: 0 },
   };
 
-  const currentAlias = router.asPath.split('/')[2];
+  const currentAlias = pathname.split('/')[2];
 
   const isItemOpened = (m: MenuItem): boolean =>
     m.isOpened ?? m.pages.some(p => p.alias === currentAlias);
@@ -101,24 +103,27 @@ export const Menu = (): JSX.Element => {
   };
 
   const buildThirdLevel = (pages: PageItem[], route: string, isOpened: boolean) => {
-    return pages.map(page => (
-      <motion.li key={page._id} variants={variantsChildren} >
-        <Link
-          href={`/${route}/${page.alias}`}
-          tabIndex={isOpened ? 0 : -1}
-          aria-current={router.asPath === `/${route}/${page.alias}` ? 'page' : false}
-          className={cn(styles.thirdLevel, {
-            [styles.thirdLevelActive]: router.asPath === `/${route}/${page.alias}`,
-          })}
-        >
-          {page.category}
-        </Link>
-      </motion.li>
-    ));
+    return pages.map(page => {
+      const href = `/${route}/${page.alias}`;
+      return (
+        <motion.li key={page._id} variants={variantsChildren}>
+          <Link
+            href={href}
+            tabIndex={isOpened ? 0 : -1}
+            aria-current={pathname === href ? 'page' : false}
+            className={cn(styles.thirdLevel, {
+              [styles.thirdLevelActive]: pathname === href,
+            })}
+          >
+            {page.category}
+          </Link>
+        </motion.li>
+      );
+    });
   };
 
   return (
-    <nav className={styles.menu} role='navigation'>
+    <nav className={styles.menu}>
       {announce &&
         <span role='log' className='visuallyHidden'>{announce === 'opened' ? 'Развернуто' : 'Свернуто'}</span>}
       <ul>

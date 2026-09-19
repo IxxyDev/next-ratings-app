@@ -1,14 +1,14 @@
-import Head from 'next/head';
-import { Htag, P } from '../components';
-import { withLayout } from '../layout/Layout';
+import type { Metadata } from 'next';
+import { Htag, P } from '../../../components';
 
-function Agreement(): JSX.Element {
+export const metadata: Metadata = {
+  title: 'Пользовательское соглашение',
+  robots: { index: false },
+};
+
+export default function Agreement() {
   return (
     <>
-      <Head>
-        <title>Пользовательское соглашение — MyTop</title>
-        <meta name='robots' content='noindex' />
-      </Head>
       <Htag tag='h1'>Пользовательское соглашение</Htag>
       <P>
         Используя сайт MyTop, вы соглашаетесь с тем, что рейтинги и отзывы носят
@@ -18,9 +18,3 @@ function Agreement(): JSX.Element {
     </>
   );
 }
-
-export default withLayout(Agreement);
-
-export const getStaticProps = async () => ({
-  props: { menu: [], firstCategory: 0 },
-});

@@ -1,14 +1,14 @@
-import Head from 'next/head';
-import { Htag, P } from '../components';
-import { withLayout } from '../layout/Layout';
+import type { Metadata } from 'next';
+import { Htag, P } from '../../../components';
 
-function Privacy(): JSX.Element {
+export const metadata: Metadata = {
+  title: 'Политика конфиденциальности',
+  robots: { index: false },
+};
+
+export default function Privacy() {
   return (
     <>
-      <Head>
-        <title>Политика конфиденциальности — MyTop</title>
-        <meta name='robots' content='noindex' />
-      </Head>
       <Htag tag='h1'>Политика конфиденциальности</Htag>
       <P>
         При отправке отзыва мы сохраняем только указанное вами имя и текст отзыва.
@@ -18,9 +18,3 @@ function Privacy(): JSX.Element {
     </>
   );
 }
-
-export default withLayout(Privacy);
-
-export const getStaticProps = async () => ({
-  props: { menu: [], firstCategory: 0 },
-});

@@ -4,7 +4,7 @@ import { ButtonProps } from "./Button.props";
 import styles from "./Button.module.css";
 import cn from "classnames";
 import ArrowIcon from './arrow.svg';
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 
 export const Button = ({ appearance, arrow = 'none', children, className, ...props }: ButtonProps) => {
   const classes = cn(styles.button, className, {
