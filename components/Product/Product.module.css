@@ -143,8 +143,17 @@
   padding: 30px;
 }
 
-.rateTitle a {
+.reviewLink {
+  padding: 0;
+  font: inherit;
   color: var(--primary);
+  cursor: pointer;
+  background: none;
+  border: none;
+}
+
+.reviewLink:hover {
+  text-decoration: underline;
 }
 
 @media screen and (width <= 1320px) {

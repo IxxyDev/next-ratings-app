@@ -23,14 +23,16 @@ const Layout = ({ children }: LayoutProps): JSX.Element => {
   return (
     <div className={styles.wrapper}>
       <a
+        href='#main-content'
         onFocus={() => setIsSkipLinkShown(true)}
+        onBlur={() => setIsSkipLinkShown(false)}
         onKeyDown={skipContentAction}
-        tabIndex={0} className={cn(styles.skipLink, {
-        [styles.shown]: isSkipLinkShown
-      })}>К содержанию</a>
+        className={cn(styles.skipLink, {
+          [styles.shown]: isSkipLinkShown
+        })}>К содержанию</a>
       <Header className={styles.header} />
       <Sidebar className={styles.sidebar} />
-      <main className={styles.body} ref={bodyRef} tabIndex={0} role='main'>
+      <main id='main-content' className={styles.body} ref={bodyRef} tabIndex={-1}>
         {children}
       </main>
       <Footer className={styles.footer} />

@@ -78,10 +78,10 @@ const ProductBase = forwardRef(({
         <div className={styles.priceTitle}>цена</div>
         <div className={styles.creditTitle}>кредит</div>
         <div className={styles.rateTitle}>
-          <a href="#" onClick={scrollToReview}>
+          <button type='button' className={styles.reviewLink} onClick={scrollToReview}>
             {product.reviewCount}{' '}
             {declOfNum(product.reviewCount, ['отзыв', 'отзыва', 'отзывов'])}
-          </a>
+          </button>
         </div>
         <Divider className={cn(styles.hr, styles.hr2)}/>
         <div className={styles.feature}>
