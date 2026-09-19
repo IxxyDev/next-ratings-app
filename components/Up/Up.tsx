@@ -1,16 +1,14 @@
 import styles from "./Up.module.css";
-import {FC, useEffect} from "react";
+import {FC} from "react";
 import {useScrollY} from "../../hooks/useScrollY";
-import {useAnimation, motion} from "framer-motion";
+import {motion} from "framer-motion";
 import {ButtonIcon} from "../ButtonIcon/ButtonIcon";
 
 export const Up: FC = () => {
-  const controls = useAnimation();
   const scrollY = useScrollY();
-
-  useEffect(() => {
-    controls.start({ opacity: scrollY / document.body.scrollHeight });
-  }, [scrollY, controls]);
+  const opacity = typeof document === 'undefined' || !scrollY
+    ? 0
+    : Math.min(1, scrollY / document.body.scrollHeight);
 
   const scrollToTop = () => {
     window.scrollTo({
@@ -22,8 +20,7 @@ export const Up: FC = () => {
   return (
     <motion.div
       className={styles.up}
-
-      animate={controls}
+      animate={{ opacity }}
       initial={{ opacity: 0 }}
     >
       <ButtonIcon icon='up' appearance='primary' aria-label='Наверх' onClick={scrollToTop} />
