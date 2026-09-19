@@ -1,29 +1,27 @@
-import {ProductProps} from './Product.props';
+'use client';
+
+import { ProductProps } from './Product.props';
 import styles from './Product.module.css';
-import React, {ForwardedRef, forwardRef, useRef, useState} from 'react';
-import {Card} from '../Card/Card';
-import {Rating} from '../Rating/Rating';
-import {Tag} from '../Tag/Tag';
-import {Button} from '../Button/Button';
-import {declOfNum, priceRu} from '../../helpers/helpers';
-import {Divider} from '../Divider/Divider';
+import { useRef, useState } from 'react';
+import { Card } from '../Card/Card';
+import { Rating } from '../Rating/Rating';
+import { Tag } from '../Tag/Tag';
+import { Button } from '../Button/Button';
+import { declOfNum, priceRu } from '../../helpers/helpers';
+import { Divider } from '../Divider/Divider';
 import cn from 'classnames';
-import {Review} from '../Review/Review';
-import {ReviewForm} from "../ReviewForm/ReviewForm";
-import {motion} from "framer-motion";
+import { Review } from '../Review/Review';
+import { ReviewForm } from '../ReviewForm/ReviewForm';
+import { motion } from 'framer-motion';
 import Image from 'next/image';
 
-const ProductBase = forwardRef(({
-                                            product,
-                                            className,
-                                            ...props
-                                          }: ProductProps, ref: ForwardedRef<HTMLDivElement>): JSX.Element => {
+const ProductBase = ({ product, className, ref, ...props }: ProductProps) => {
   const [isReviewOpened, setIsReviewOpened] = useState<boolean>(false);
   const reviewRef = useRef<HTMLDivElement>(null);
 
   const variants = {
-    visible: {opacity: 1, height: 'auto'},
-    hidden: {opacity: 0, height: 0}
+    visible: { opacity: 1, height: 'auto' },
+    hidden: { opacity: 0, height: 0 }
   };
 
   const scrollToReview = () => {
@@ -44,7 +42,6 @@ const ProductBase = forwardRef(({
             alt={product.title}
             width={70}
             height={70}
-            unoptimized
           />
         </div>
         <div className={styles.title}>{product.title}</div>
@@ -66,7 +63,7 @@ const ProductBase = forwardRef(({
         </div>
         <div className={styles.rating}>
           <span className='visuallyHidden'>{'Рейтинг' + (product.reviewAvg ?? product.initialRating)}</span>
-          <Rating rating={product.reviewAvg ?? product.initialRating}/>
+          <Rating rating={product.reviewAvg ?? product.initialRating} />
         </div>
         <div className={styles.tags}>
           {product.categories.map((c) => (
@@ -83,12 +80,12 @@ const ProductBase = forwardRef(({
             {declOfNum(product.reviewCount, ['отзыв', 'отзыва', 'отзывов'])}
           </button>
         </div>
-        <Divider className={cn(styles.hr, styles.hr2)}/>
+        <Divider className={cn(styles.hr, styles.hr2)} />
         <div className={styles.feature}>
           {product.characteristics.map((c) => (
             <div className={styles.characteristic} key={c.name}>
               <span className={styles.characteristicsName}>{c.name}</span>
-              <span className={styles.dots}/>
+              <span className={styles.dots} />
               <span className={styles.characteristicsValue}>{c.value}</span>
             </div>
           ))}
@@ -107,7 +104,7 @@ const ProductBase = forwardRef(({
             </div>
           )}
         </div>
-        <Divider className={styles.hr}/>
+        <Divider className={styles.hr} />
         <div className={styles.actions}>
           <Button appearance='primary' href={product.link} target='_blank' rel='noopener noreferrer'>
             Узнать подробнее
@@ -123,7 +120,7 @@ const ProductBase = forwardRef(({
           </Button>
         </div>
       </Card>
-      <motion.div animate={isReviewOpened ? 'visible' : 'hidden' } variants={variants} initial={'hidden'}>
+      <motion.div animate={isReviewOpened ? 'visible' : 'hidden'} variants={variants} initial='hidden'>
         <Card
           color='blue'
           className={cn(styles.reviews)}
@@ -132,15 +129,15 @@ const ProductBase = forwardRef(({
         >
           {product.reviews.map((review) => (
             <div key={review._id}>
-              <Review review={review}/>
-              <Divider/>
+              <Review review={review} />
+              <Divider />
             </div>
           ))}
-          <ReviewForm productId={product._id} isOpened={isReviewOpened}/>
+          <ReviewForm productId={product._id} isOpened={isReviewOpened} />
         </Card>
       </motion.div>
     </div>
   );
-});
-ProductBase.displayName = 'Product';
+};
+
 export const Product = motion.create(ProductBase);

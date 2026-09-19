@@ -1,13 +1,12 @@
 import { ReviewProps } from './Review.props';
 import styles from './Review.module.css';
 import cn from 'classnames';
-import { FC } from 'react';
 import UserIcon from './user.svg';
 import { format } from 'date-fns';
 import { ru } from 'date-fns/locale';
 import { Rating } from '../Rating/Rating';
 
-export const Review: FC<ReviewProps> = ({ review, className, ...props }) => {
+export const Review = ({ review, className, ...props }: ReviewProps) => {
   const { name, title, description, createdAt, rating } = review;
 
   return (

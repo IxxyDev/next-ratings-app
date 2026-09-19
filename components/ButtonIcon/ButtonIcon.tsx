@@ -2,7 +2,7 @@ import {ButtonIconProps, icons} from "./ButtonIcon.props";
 import styles from "./ButtonIcon.module.css";
 import cn from "classnames";
 
-export const ButtonIcon = ({ appearance, icon, className, ...props }: ButtonIconProps): JSX.Element => {
+export const ButtonIcon = ({ appearance, icon, className, ...props }: ButtonIconProps) => {
   const Icon = icons[icon];
 
   return (

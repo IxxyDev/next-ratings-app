@@ -1,10 +1,11 @@
-import styles from "./Up.module.css";
-import {FC} from "react";
-import {useScrollY} from "../../hooks/useScrollY";
-import {motion} from "framer-motion";
-import {ButtonIcon} from "../ButtonIcon/ButtonIcon";
+'use client';
 
-export const Up: FC = () => {
+import styles from './Up.module.css';
+import { useScrollY } from '../../hooks/useScrollY';
+import { motion } from 'framer-motion';
+import { ButtonIcon } from '../ButtonIcon/ButtonIcon';
+
+export const Up = () => {
   const scrollY = useScrollY();
   const opacity = typeof document === 'undefined' || !scrollY
     ? 0

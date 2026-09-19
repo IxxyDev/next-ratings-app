@@ -1,3 +1,4 @@
+import { ReactElement } from 'react';
 import { TopLevelCategory } from './page.interface';
 
 export interface Id {
@@ -20,6 +21,6 @@ export interface MenuItem {
 export interface FirstLevelMenuItem {
   route: string;
   name: string;
-  icon: JSX.Element;
+  icon: ReactElement;
   id: TopLevelCategory;
 }

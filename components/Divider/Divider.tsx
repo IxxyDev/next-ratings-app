@@ -1,9 +1,8 @@
 import { DividerProps } from "./Divider.props";
 import styles from "./Divider.module.css";
 import cn from 'classnames';
-import {FC} from "react";
 
-export const Divider: FC<DividerProps> = ({ className, ...props }) => {
+export const Divider = ({ className, ...props }: DividerProps) => {
   return (
     <hr className={cn(className, styles.hr)} {...props} />
   );

@@ -1,98 +1,72 @@
-import { RatingProps } from "./Rating.props";
-import styles from "./Rating.module.css";
+'use client';
+
+import { RatingProps } from './Rating.props';
+import styles from './Rating.module.css';
 import cn from 'classnames';
 import StarIcon from './star.svg';
-import React, {useEffect, useState, KeyboardEvent, forwardRef, ForwardedRef, useRef} from 'react';
+import { useState, KeyboardEvent, useRef } from 'react';
 
-export const Rating = forwardRef(({ isEditable = false, rating, setRating, error, tabIndex, ...props }: RatingProps, ref: ForwardedRef<HTMLDivElement>): JSX.Element => {
-  const [ratingArray, setRatingArray] = useState<JSX.Element[]>(new Array(5).fill(<></>));
-  const ratingArrayRef = useRef<(HTMLSpanElement | null)[]>([]);
+const STARS = [1, 2, 3, 4, 5];
 
-  useEffect(() => {
-    constructRating(rating);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [rating, tabIndex]);
+export const Rating = ({ isEditable = false, rating, setRating, error, tabIndex, className, ref, ...props }: RatingProps) => {
+  const [hovered, setHovered] = useState<number | null>(null);
+  const starsRef = useRef<(HTMLSpanElement | null)[]>([]);
+  const shownRating = isEditable && hovered !== null ? hovered : rating;
 
-  const computeFocus = (rating: number, idx: number): number => {
-    if (!isEditable) {
-      return -1;
-    }
-    if (!rating && idx === 0) {
-      return tabIndex ?? 0;
-    }
-    if (rating === idx + 1) {
-      return tabIndex ?? 0;
-    }
+  const computeFocus = (idx: number): number => {
+    if (!isEditable) return -1;
+    if (!rating && idx === 0) return tabIndex ?? 0;
+    if (rating === idx + 1) return tabIndex ?? 0;
     return -1;
   };
 
-  const constructRating = (currentRating: number) => {
-    const updatedArray = ratingArray.map((r: JSX.Element, i: number) => {
-      return (
-        <span
-          key={i}
-          className={cn(styles.star, {
-            [styles.filled]: i < currentRating,
-            [styles.editable]: isEditable,
-          })}
-          onMouseEnter={() => changeDisplay(i + 1)}
-          onMouseLeave={() => changeDisplay(rating)}
-          onClick={() => onClick(i + 1)}
-          tabIndex={computeFocus(rating, i)}
-          onKeyDown={handleKeyClick}
-          ref={ref => { ratingArrayRef.current?.push(ref); }}
-          role={isEditable ? 'slider' : ''}
-          aria-valuenow={rating}
-          aria-valuemax={5}
-          aria-valuemin={1}
-          aria-label={isEditable ? 'Укажите рейтинг' : ('рейтинг' + rating)}
-          aria-invalid={Boolean(error)}
-        >
-          <StarIcon/>
-        </span>
-      );
-    });
-    setRatingArray(updatedArray);
-  };
-
-  const changeDisplay = (i: number) => {
-    if (!isEditable) return;
-    constructRating(i);
-  };
-
-  const onClick = (i: number) => {
+  const handleKeyClick = (e: KeyboardEvent<HTMLSpanElement>) => {
     if (!isEditable || !setRating) return;
-    setRating(i);
-  };
-
-  const handleKeyClick = (e: KeyboardEvent<HTMLDivElement>) => {
-    if (!isEditable || !setRating) {
-      return;
-    }
 
     if (e.code === 'ArrowRight' || e.code === 'ArrowUp') {
-      if (!rating) {
-        setRating(1);
-      } else {
-        e.preventDefault();
-        setRating(rating < 5 ? rating + 1 : 5)
-      }
-      ratingArrayRef.current[rating]?.focus();
+      e.preventDefault();
+      const next = rating ? Math.min(rating + 1, 5) : 1;
+      setRating(next);
+      starsRef.current[next - 1]?.focus();
     }
     if (e.code === 'ArrowLeft' || e.code === 'ArrowDown') {
       e.preventDefault();
-      setRating(rating > 1 ? rating - 1 : 1);
-      ratingArrayRef.current[rating - 2]?.focus();
+      const next = Math.max(rating - 1, 1);
+      setRating(next);
+      starsRef.current[next - 1]?.focus();
     }
   };
 
   return (
-    <div className={cn(styles.ratingWrapper, {
-      [styles.error]: error
-    })} {...props} ref={ref}>
-      {ratingArray.map((r, i) => (<span key={i}>{r}</span>))}
+    <div
+      className={cn(styles.ratingWrapper, className, { [styles.error]: error })}
+      {...props}
+      ref={ref}
+    >
+      {STARS.map((value, i) => (
+        <span
+          key={value}
+          className={cn(styles.star, {
+            [styles.filled]: value <= shownRating,
+            [styles.editable]: isEditable,
+          })}
+          onMouseEnter={() => isEditable && setHovered(value)}
+          onMouseLeave={() => setHovered(null)}
+          onClick={() => isEditable && setRating?.(value)}
+          tabIndex={computeFocus(i)}
+          onKeyDown={handleKeyClick}
+          ref={(el) => { starsRef.current[i] = el; }}
+          role={isEditable ? 'slider' : undefined}
+          aria-valuenow={isEditable ? rating : undefined}
+          aria-valuemax={isEditable ? 5 : undefined}
+          aria-valuemin={isEditable ? 1 : undefined}
+          aria-label={isEditable ? 'Укажите рейтинг' : `рейтинг ${rating}`}
+          aria-invalid={isEditable ? Boolean(error) : undefined}
+        >
+          <StarIcon />
+        </span>
+      ))}
       {error && <span role='alert' className={styles.errorMessage}>{error.message}</span>}
     </div>
   );
-});
-Rating.displayName = 'Rating';
+};

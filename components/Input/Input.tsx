@@ -1,9 +1,8 @@
-import styles from "./Input.module.css";
+import styles from './Input.module.css';
 import cn from 'classnames';
-import React, {ForwardedRef, forwardRef} from "react";
-import {InputProps} from "./Input.props";
+import { InputProps } from './Input.props';
 
-export const Input = forwardRef(({ className, error, ...props}: InputProps, ref: ForwardedRef<HTMLInputElement>): JSX.Element => {
+export const Input = ({ className, error, ref, ...props }: InputProps) => {
   return (
     <div className={cn(styles.inputWrapper, className)}>
       <input className={cn(styles.input, {
@@ -11,7 +10,5 @@ export const Input = forwardRef(({ className, error, ...props}: InputProps, ref:
       })} ref={ref} {...props} />
       {error && <span role='alert' className={styles.errorMessage}>{error.message}</span>}
     </div>
-
   );
-});
-Input.displayName = 'Input';
+};

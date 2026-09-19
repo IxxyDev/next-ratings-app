@@ -1,10 +1,11 @@
-import {SortEnum, SortProps} from "./Sort.props";
-import styles from "./Sort.module.css";
+'use client';
+
+import { SortEnum, SortProps } from './Sort.props';
+import styles from './Sort.module.css';
 import cn from 'classnames';
-import {FC} from "react";
 import SortIcon from './sort.svg';
 
-export const Sort: FC<SortProps> = ({sort, setSort, className, ...props}) => {
+export const Sort = ({ sort, setSort, className, ...props }: SortProps) => {
   return (
     <div className={cn(styles.sort, className)} {...props}>
       <div className={styles.sortName} id='sort'>Сортировка</div>
@@ -17,7 +18,7 @@ export const Sort: FC<SortProps> = ({sort, setSort, className, ...props}) => {
           [styles.active]: sort === SortEnum.Rating
         })}
       >
-        <SortIcon className={styles.sortIcon}/>По рейтингу
+        <SortIcon className={styles.sortIcon} />По рейтингу
       </button>
       <button
         id='price'
@@ -28,7 +29,7 @@ export const Sort: FC<SortProps> = ({sort, setSort, className, ...props}) => {
           [styles.active]: sort === SortEnum.Price
         })}
       >
-        <SortIcon className={styles.sortIcon}/>По цене
+        <SortIcon className={styles.sortIcon} />По цене
       </button>
     </div>
   );
