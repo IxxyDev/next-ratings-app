@@ -5,20 +5,31 @@ import ArrowIcon from './arrow.svg';
 import {motion} from "framer-motion";
 
 export const Button = ({ appearance, arrow = 'none', children, className, ...props }: ButtonProps): JSX.Element => {
-  return (
-    <motion.button
-      whileHover={{ scale: 1.05 }}
-      className={cn(styles.button, className, {
-        [styles.primary]: appearance === "primary",
-        [styles.ghost]: appearance === "ghost",
-      })}
-      {...props}
-    >
+  const classes = cn(styles.button, className, {
+    [styles.primary]: appearance === "primary",
+    [styles.ghost]: appearance === "ghost",
+  });
+  const content = (
+    <>
       {children}
       {arrow !== 'none' && <span className={cn(styles.arrow, {
         [styles.down]: arrow === 'down'
       })}><ArrowIcon /></span>
       }
+    </>
+  );
+
+  if (props.href !== undefined) {
+    return (
+      <motion.a whileHover={{ scale: 1.05 }} className={classes} {...props}>
+        {content}
+      </motion.a>
+    );
+  }
+
+  return (
+    <motion.button whileHover={{ scale: 1.05 }} className={classes} {...props}>
+      {content}
     </motion.button>
   );
 };

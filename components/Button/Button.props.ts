@@ -1,8 +1,17 @@
-import { ButtonHTMLAttributes, DetailedHTMLProps, ReactNode } from 'react';
+import { AnchorHTMLAttributes, ButtonHTMLAttributes, DetailedHTMLProps, ReactNode } from 'react';
 
-export interface ButtonProps extends Omit<DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>,
-  'onAnimationStart' | 'onDragStart' | 'onDragEnd' | 'onDrag' | 'ref'> {
+type MotionConflicts = 'onAnimationStart' | 'onDragStart' | 'onDragEnd' | 'onDrag' | 'ref';
+
+type NativeButtonProps = Omit<DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>, MotionConflicts>;
+type NativeAnchorProps = Omit<DetailedHTMLProps<AnchorHTMLAttributes<HTMLAnchorElement>, HTMLAnchorElement>, MotionConflicts>;
+
+interface CommonButtonProps {
   children: ReactNode;
   appearance: 'primary' | 'ghost';
   arrow?: 'right' | 'down' | 'none';
 }
+
+export type ButtonProps = CommonButtonProps & (
+  | ({ href?: undefined } & NativeButtonProps)
+  | ({ href: string } & NativeAnchorProps)
+);
