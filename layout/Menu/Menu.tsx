@@ -2,7 +2,7 @@ import {AppContext} from '../../context/app.context';
 import styles from './Menu.module.css';
 import cn from 'classnames';
 import React, {useContext, KeyboardEvent, useState} from 'react';
-import {FirstLevelMenuItem, PageItem} from '../../interfaces/menu.interface';
+import {FirstLevelMenuItem, MenuItem, PageItem} from '../../interfaces/menu.interface';
 import Link from 'next/link';
 import {useRouter} from 'next/router';
 import {firstLevelMenu} from '../../helpers/helpers';
@@ -30,14 +30,19 @@ export const Menu = (): JSX.Element => {
     hidden: {opacity: shouldReduceMotion ? 1 : 0, height: 0},
   };
 
+  const currentAlias = router.asPath.split('/')[2];
+
+  const isItemOpened = (m: MenuItem): boolean =>
+    m.isOpened ?? m.pages.some(p => p.alias === currentAlias);
+
   const openSecondLevel = (secondCategory: string) => {
-    setMenu?.(menu.map(m => {
-      if (m._id.secondCategory === secondCategory) {
-        setAnnounce(m.isOpened ? 'closed' : 'opened');
-        m.isOpened = !m.isOpened;
-      }
-      return m;
-    }));
+    const target = menu.find(m => m._id.secondCategory === secondCategory);
+    if (!target) return;
+    const nextOpened = !isItemOpened(target);
+    setAnnounce(nextOpened ? 'opened' : 'closed');
+    setMenu?.(menu.map(m =>
+      m._id.secondCategory === secondCategory ? { ...m, isOpened: nextOpened } : m
+    ));
   };
 
   const openSecondLevelKey = (key: KeyboardEvent, secondCategory: string) => {
@@ -69,9 +74,7 @@ export const Menu = (): JSX.Element => {
     return (
       <ul className={styles.secondBlock}>
         {menu.map(m => {
-          if (m.pages.map(p => p.alias).includes(router.asPath.split('/')[2])) {
-            m.isOpened = true;
-          }
+          const isOpened = isItemOpened(m);
 
           return (
             <li key={m._id.secondCategory}>
@@ -83,11 +86,11 @@ export const Menu = (): JSX.Element => {
                 <motion.ul
                   layout
                   variants={variants}
-                  initial={m.isOpened ? 'visible' : 'hidden'}
-                  animate={m.isOpened ? 'visible' : 'hidden'}
+                  initial={isOpened ? 'visible' : 'hidden'}
+                  animate={isOpened ? 'visible' : 'hidden'}
                   className={cn(styles.secondLevelBlock)}
                 >
-                  {buildThirdLevel(m.pages, menuItem.route, m.isOpened ?? false)}
+                  {buildThirdLevel(m.pages, menuItem.route, isOpened)}
                 </motion.ul>
               </button>
             </li>
