@@ -109,7 +109,9 @@ const ProductBase = forwardRef(({
         </div>
         <Divider className={styles.hr}/>
         <div className={styles.actions}>
-          <Button appearance='primary'>Узнать подробнее</Button>
+          <Button appearance='primary' href={product.link} target='_blank' rel='noopener noreferrer'>
+            Узнать подробнее
+          </Button>
           <Button
             className={styles.reviewButton}
             appearance='ghost'
