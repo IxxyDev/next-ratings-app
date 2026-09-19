@@ -101,8 +101,8 @@ const ProductBase = forwardRef(({
             </div>
           )}
           {product.disadvantages && (
-            <div className={product.disadvantages}>
-              <div>Недостатки</div>
+            <div className={styles.disadvantages}>
+              <div className={styles.advTitle}>Недостатки</div>
               <div>{product.disadvantages}</div>
             </div>
           )}
