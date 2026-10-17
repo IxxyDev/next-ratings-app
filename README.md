@@ -13,9 +13,9 @@ so pages are prerendered and revalidated in the background.
 ## Getting started
 
 ```bash
-npm ci --ignore-scripts
-npm run dev        # http://localhost:3000
-npm run build && npm start
+pnpm install --ignore-scripts
+pnpm dev        # http://localhost:3000
+pnpm build && pnpm start
 ```
 
 `NEXT_PUBLIC_DOMAIN` (see `.env.production`) points to the API host.
@@ -34,10 +34,10 @@ If the API is unreachable, pages are built with empty data.
 
 | Command | What it does |
 |---|---|
-| `npm run lint` | ESLint |
-| `npm run stylelint` | Stylelint with autofix (also runs in pre-commit) |
-| `npx tsc --noEmit` | type check (TypeScript 7) |
-| `npm run debug` | dev server with the Node inspector |
+| `pnpm lint` | ESLint |
+| `pnpm stylelint` | Stylelint with autofix (also runs in pre-commit) |
+| `pnpm exec tsc --noEmit` | type check (TypeScript 7) |
+| `pnpm debug` | dev server with the Node inspector |
 
 ## TypeScript 7 and typescript-eslint
 
